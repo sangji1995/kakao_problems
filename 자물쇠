@@ -23,8 +23,11 @@ def middle(xy):
 def widematrix(n,m):
     key=len(n) #행
     locker=len(m) #열
-    new_matrix=[[0] * (key*3) for _ in range(locker*3)]
-    
+    xy=[[0] * (key*3) for _ in range(locker*3)]
+    #새로운 자물쇠를 중앙에 다시 넣기
+    for i in range(n):
+        for j in range(n):
+            xy[i+n][i+n]=m[i][j]
     #4방향으로 자물쇠 찾기
     for i in range(4):
         n= rotate_a_matrix_by_90_degree(n)
@@ -36,10 +39,11 @@ def widematrix(n,m):
                         xy[x+z][y+b]+=n[z][b]
                         
         #자물쇠 검사
-        if check(new_matrix) == True:
-            return True
+                if middle(xy) == True:
+                    return True
         #key
-        for i in range(m):
-            for j in range(m):
-                xy[x+i][y+j]-=key[i][j]
-    return False  
+                for i in range(m):
+                    for j in range(m):
+                        xy[x+i][y+i]-=key[i][j]
+            
+    return False
