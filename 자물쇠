@@ -1,0 +1,45 @@
+
+#자물쇠를 90도 회전시켜서 향렬을 만든다.
+def rotate_a_matrix_by_90_degree(a):
+    n=len(a)#row
+    m=len(a[0])#column
+    matrix=[[0]*n for _ in range(m)]
+    #행렬의 열쇠 90도 회전한다 다른 방향
+    for i in range(n):
+        for j in range(m):
+            matrix[j][n-j-1]=matrix[i][j] #012 -1 0 0
+
+    return matrix
+#중간에 열쇠가 있는지 확인한다. 탐색하는 것 내가 입력한 값에서 찾는 것.
+def middle(xy):
+    a=len(xy)//3 #0 1
+    for i in range(a,a*2): #중간부분
+        for j in range(a,a*2): #중간부분
+            if xy[i][j]!=1:
+                return False
+        return True
+
+#매트릭스를 확장    
+def widematrix(n,m):
+    key=len(n) #행
+    locker=len(m) #열
+    new_matrix=[[0] * (key*3) for _ in range(locker*3)]
+    
+    #4방향으로 자물쇠 찾기
+    for i in range(4):
+        n= rotate_a_matrix_by_90_degree(n)
+        #4방향으로 행렬 반복하기
+        for x in range(key*2):
+            for y in range(key*2):
+                for z in range(locker*2):
+                    for b in range(locker*2):
+                        xy[x+z][y+b]+=n[z][b]
+                        
+        #자물쇠 검사
+        if check(new_matrix) == True:
+            return True
+        #key
+        for i in range(m):
+            for j in range(m):
+                xy[x+i][y+j]-=key[i][j]
+    return False  
